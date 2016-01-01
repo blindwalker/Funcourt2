@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mainScroll"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".activities.ProfileActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/topWrapper"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/darkBlue"
+            android:elevation="7dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/defaultFont"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="@string/profile_image"
+                android:textSize="24sp" />
+
+            <ImageView
+                android:id="@+id/profileImageHolder"
+                android:layout_width="88dp"
+                android:layout_height="84dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="25dp"
+                android:src="@drawable/ic_profile_empty" />
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profileImage"
+                android:layout_width="88dp"
+                android:layout_height="84dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="25dp"
+                android:visibility="gone"
+                app:civ_border_color="@color/white60"
+                app:civ_border_width="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llContent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/topWrapper"
+            android:layout_marginBottom="35dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/headerFont"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="44dp"
+                android:text="@string/personal_info" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#22ffffff" />
+
+            <TextView
+                android:id="@+id/txtEmail"
+                style="@style/editTextFont"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:text="Herbert"
+                android:textColor="@color/colorAccent" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#22ffffff" />
+
+            <LinearLayout
+                android:id="@+id/llAmateur"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/editTextFont"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/playerTypeAmateur"
+                    android:textColor="@android:color/white" />
+
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/ic_radio_on"
+                    android:tag="radio" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#22ffffff" />
+
+            <LinearLayout
+                android:id="@+id/llTeam"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/editTextFont"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/playerTypeTeam"
+                    android:textColor="@android:color/white" />
+
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/ic_radio_off"
+                    android:tag="radio" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#22ffffff" />
+
+            <LinearLayout
+                android:id="@+id/llFormerTeam"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/editTextFont"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/playerTypeFormerTeam"
+                    android:textColor="@android:color/white" />
+
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/ic_radio_off"
+                    android:tag="radio" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#22ffffff" />
+
+
+            <TextView
+                style="@style/headerFont"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="44dp"
+                android:text="@string/position" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="14dp"
+                android:text="@string/position_long"
+                android:textSize="10sp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#22ffffff" />
+            <com.mobeta.android.dslv.DragSortListView
+                android:id="@+id/dragSortListView"
+                android:layout_width="fill_parent"
+                android:layout_height="170dp" />
+
+            <TextView
+                style="@style/headerFont"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="44dp"
+                android:text="@string/strong_foot" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="14dp"
+                android:text="@string/strong_foot_long"
+                android:textSize="10sp" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp">
+
+                <Button
+                    android:id="@+id/btnFootLeft"
+                    style="@style/selectButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="0.33"
+                    android:text="@string/left" />
+
+                <Button
+                    android:id="@+id/btnFootRight"
+                    style="@style/selectButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="0.33"
+                    android:background="@color/colorAccent"
+                    android:text="@string/right"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Button
+                    android:id="@+id/btnFootBoth"
+                    style="@style/selectButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.33"
+                    android:text="@string/both" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/confirm"
+            android:layout_below="@+id/llContent"
+            android:background="@color/colorAccent"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+</ScrollView>
