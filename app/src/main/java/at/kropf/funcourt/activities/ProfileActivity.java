@@ -12,8 +12,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
 import com.mobeta.android.dslv.DragSortListView;
+import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -22,6 +29,7 @@ import java.util.List;
 
 import at.kropf.funcourt.R;
 import at.kropf.funcourt.adapter.PositionAdapter;
+import at.kropf.funcourt.application.App;
 import at.kropf.funcourt.model.Position;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
@@ -57,7 +65,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        ((ScrollView)findViewById(R.id.mainScroll)).scrollTo(0,0);
+        ((ScrollView) findViewById(R.id.mainScroll)).scrollTo(0, 0);
 
         btnFootLeft = (Button) findViewById(R.id.btnFootLeft);
         btnFootRight = (Button) findViewById(R.id.btnFootRight);
@@ -93,6 +101,16 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         lv.setAdapter(positionAdapter);
 
         findViewById(R.id.btnConfirm).setOnClickListener(this);
+
+        if (AccessToken.getCurrentAccessToken() != null) {
+            profileImage.setImageBitmap(App.getCurrentUser().getProfileImage());
+            profileImage.setVisibility(View.VISIBLE);
+            profileImageHolder.setVisibility(View.GONE);
+
+        }
+
+        ((TextView) findViewById(R.id.txtUsername)).setText(App.getCurrentUser().getUsername());
+
     }
 
     @Override
@@ -135,6 +153,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 startActivityForResult(photoPickerIntent, SELECT_PHOTO);
                 break;
             case R.id.btnConfirm:
+                App.getPreferences().setLoggedIn(true);
                 startActivity(new Intent(ProfileActivity.this, MainActivity.class));
                 finish();
         }
@@ -163,12 +182,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         final Uri imageUri = imageReturnedIntent.getData();
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        int targetWidth  = selectedImage.getWidth() /2; //change this to control the size
-                        int targetHeight = selectedImage.getHeight() / 2 ;
+                        int targetWidth = selectedImage.getWidth() / 2; //change this to control the size
+                        int targetHeight = selectedImage.getHeight() / 2;
                         Matrix matrix = new Matrix();
                         matrix.postScale(1f, 1f);
                         Bitmap resizedBitmap = Bitmap.createBitmap(selectedImage, 0, 0, targetWidth, targetHeight, matrix, true);
 
+                        App.getCurrentUser().setProfileImage(resizedBitmap);
                         profileImage.setImageBitmap(resizedBitmap);
                         profileImage.setVisibility(View.VISIBLE);
                         profileImageHolder.setVisibility(View.GONE);

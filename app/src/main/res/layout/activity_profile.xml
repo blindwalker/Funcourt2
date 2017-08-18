@@ -71,7 +71,7 @@
                 android:background="#22ffffff" />
 
             <TextView
-                android:id="@+id/txtEmail"
+                android:id="@+id/txtUsername"
                 style="@style/editTextFont"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

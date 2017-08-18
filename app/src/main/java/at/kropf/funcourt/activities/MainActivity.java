@@ -1,5 +1,6 @@
 package at.kropf.funcourt.activities;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,14 +11,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.melnykov.fab.FloatingActionButton;
 
 import at.kropf.funcourt.R;
 import at.kropf.funcourt.adapter.EventAdapter;
 import at.kropf.funcourt.adapter.LeagueSpinnerAdapter;
+import at.kropf.funcourt.application.App;
 import at.kropf.funcourt.model.League;
 
 public class MainActivity extends AppCompatActivity
@@ -32,6 +38,11 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(!App.getPreferences().isLoggedIn()) {
+            startActivity(new Intent(this, WelcomeActivity.class));
+            finish();
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,6 +63,17 @@ public class MainActivity extends AppCompatActivity
         leagueSpinner.setAdapter(new LeagueSpinnerAdapter(this, League.createDummyLeagueList(3, this)));
         leagueSpinner.setOnItemSelectedListener(this);
 
+        if(App.getCurrentUser().getProfileImage() != null) {
+            headerView.findViewById(R.id.profileImageHolder).setVisibility(View.GONE);
+            headerView.findViewById(R.id.profileImage).setVisibility(View.VISIBLE);
+            ((ImageView)headerView.findViewById(R.id.profileImage)).setImageBitmap(App.getCurrentUser().getProfileImage());
+        } else {
+            headerView.findViewById(R.id.profileImageHolder).setVisibility(View.VISIBLE);
+            headerView.findViewById(R.id.profileImage).setVisibility(View.GONE);
+        }
+
+        ((TextView) headerView.findViewById(R.id.txtUsername)).setText(App.getCurrentUser().getUsername());
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         eventList = (ListView) findViewById(R.id.eventList);
         eventAdapter = new EventAdapter(((League)leagueSpinner.getSelectedItem()), this);
@@ -69,6 +91,22 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Logs 'install' and 'app activate' App Events.
+        AppEventsLogger.activateApp(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -90,7 +128,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_logout) {
-
+            App.getPreferences().setLoggedIn(true);
+            LoginManager.getInstance().logOut();
+            startActivity(new Intent(this, WelcomeActivity.class));
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

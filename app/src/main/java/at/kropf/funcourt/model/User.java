@@ -1,5 +1,7 @@
 package at.kropf.funcourt.model;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,16 +26,18 @@ public class User {
     private Map<Integer, Position> positions;
     private Experience experience;
     private StrongFoot strongFoot;
+    private Bitmap profileImage;
 
     public User() {}
 
-    public User(int id, String email, String username, Map<Integer, Position> positions, Experience experience, StrongFoot strongFoot) {
+    public User(int id, String email, String username, Map<Integer, Position> positions, Experience experience, StrongFoot strongFoot, Bitmap profileImage) {
         this.id = id;
         this.email = email;
         this.username = username;
         this.positions = positions;
         this.experience = experience;
         this.strongFoot = strongFoot;
+        this.profileImage = profileImage;
     }
 
     public int getId() {
@@ -82,6 +86,14 @@ public class User {
 
     public void setStrongFoot(StrongFoot strongFoot) {
         this.strongFoot = strongFoot;
+    }
+
+    public Bitmap getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(Bitmap profileImage) {
+        this.profileImage = profileImage;
     }
 
     public static List<User> createDummyUserList(int amount) {
