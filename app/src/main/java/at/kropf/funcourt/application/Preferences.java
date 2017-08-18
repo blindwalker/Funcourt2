@@ -19,10 +19,7 @@ public class Preferences {
     }
 
     public boolean isLoggedIn() {
-        if(!preferences.getBoolean(PREFERENCE_IS_LOGGED_IN, false) && AccessToken.getCurrentAccessToken() == null) {
-            return false;
-        }
-        return true;
+        return preferences.getBoolean(PREFERENCE_IS_LOGGED_IN, false);
     }
 
     public void setLoggedIn(boolean enabled) {
