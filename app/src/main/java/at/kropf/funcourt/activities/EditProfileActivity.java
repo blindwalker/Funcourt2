@@ -1,10 +1,6 @@
 package at.kropf.funcourt.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,11 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.facebook.AccessToken;
 import com.mobeta.android.dslv.DragSortListView;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +21,11 @@ import at.kropf.funcourt.application.App;
 import at.kropf.funcourt.model.Position;
 import at.kropf.funcourt.model.User;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * Created by Daniel on 27.08.17.
+ */
+
+public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final int SELECT_PHOTO = 1;
 
@@ -44,6 +41,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private ImageView profileImageHolder;
 
     private PositionAdapter positionAdapter;
+
+    private User currentUser;
+
+    private TextView txtUsername;
 
     private User.Experience mExperience;
     private User.StrongFoot mStrongFoot;
@@ -63,6 +64,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        currentUser = App.getCurrentUser();
 
         ((ScrollView) findViewById(R.id.mainScroll)).scrollTo(0, 0);
 
@@ -87,6 +90,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         profileImage.setOnClickListener(this);
         profileImageHolder.setOnClickListener(this);
 
+        txtUsername = (TextView) findViewById(R.id.txtUsername);
+
         DragSortListView lv = (DragSortListView) findViewById(R.id.dragSortListView);
         lv.setDropListener(onDrop);
         List<Position> mPositions = new ArrayList<>();
@@ -101,14 +106,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         findViewById(R.id.btnConfirm).setOnClickListener(this);
 
-        if (AccessToken.getCurrentAccessToken() != null) {
-            profileImage.setImageBitmap(App.getCurrentUser().getProfileImage());
-            profileImage.setVisibility(View.VISIBLE);
-            profileImageHolder.setVisibility(View.GONE);
+        showCurrentSettings();
 
-        }
-
-        ((TextView) findViewById(R.id.txtUsername)).setText(App.getCurrentUser().getUsername());
 
     }
 
@@ -162,7 +161,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 App.getCurrentUser().setStrongFoot(mStrongFoot);
 
                 App.getPreferences().setLoggedIn(true);
-                startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                startActivity(new Intent(EditProfileActivity.this, MainActivity.class));
                 finish();
         }
     }
@@ -176,41 +175,52 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         btnFootBoth.setBackground(getResources().getDrawable(R.drawable.bg_button_empty));
         btnFootBoth.setTextColor(getResources().getColor(R.color.white60));
-
+    }
+    private void showCurrentSettings() {
+        showExperience();
+        showStrongFoot();
+        txtUsername.setText(currentUser.getUsername());
     }
 
-    private void setDefaultValues() {
-        mExperience = User.Experience.AMATEUR;
-        mStrongFoot = User.StrongFoot.BOTH;
+    /**
+     *
+     * display experience from stored user.
+     */
+    private void showExperience() {
+        switch (currentUser.getExperience()) {
+            case AMATEUR:
+                ((ImageView) llAmateur.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_on);
+                ((ImageView) llTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
+                ((ImageView) llFormerTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
+                break;
+            case TEAM:
+                ((ImageView) llAmateur.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
+                ((ImageView) llTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_on);
+                ((ImageView) llFormerTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
+                break;
+            case FORMER_TEAM:
+                ((ImageView) llAmateur.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
+                ((ImageView) llTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
+                ((ImageView) llFormerTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_on);
+                break;
+        }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-
-        switch (requestCode) {
-            case SELECT_PHOTO:
-                if (resultCode == RESULT_OK) {
-                    try {
-                        final Uri imageUri = imageReturnedIntent.getData();
-                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        int targetWidth = selectedImage.getWidth() / 2; //change this to control the size
-                        int targetHeight = selectedImage.getHeight() / 2;
-                        Matrix matrix = new Matrix();
-                        matrix.postScale(1f, 1f);
-                        Bitmap resizedBitmap = Bitmap.createBitmap(selectedImage, 0, 0, targetWidth, targetHeight, matrix, true);
-
-                        App.getCurrentUser().setProfileImage(resizedBitmap);
-                        profileImage.setImageBitmap(resizedBitmap);
-                        profileImage.setVisibility(View.VISIBLE);
-                        profileImageHolder.setVisibility(View.GONE);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-
-                }
+    private void showStrongFoot() {
+        resetFootButtons();
+        switch (currentUser.getStrongFoot()){
+            case RIGHT:
+                btnFootRight.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                btnFootRight.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                break;
+            case LEFT:
+                btnFootLeft.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                btnFootLeft.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                break;
+            case BOTH:
+                btnFootBoth.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                btnFootBoth.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                break;
         }
     }
 }
-

@@ -124,11 +124,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_other_players) {
 
         } else if (id == R.id.nav_profile) {
-
+            startActivity(new Intent(this, EditProfileActivity.class));
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_logout) {
-            App.getPreferences().setLoggedIn(true);
+            App.getPreferences().setLoggedIn(false);
             LoginManager.getInstance().logOut();
             startActivity(new Intent(this, WelcomeActivity.class));
             finish();

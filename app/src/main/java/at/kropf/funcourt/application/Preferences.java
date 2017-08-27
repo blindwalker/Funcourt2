@@ -4,13 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.facebook.AccessToken;
-
-import java.util.UUID;
-
 public class Preferences {
 
     private static final String PREFERENCE_IS_LOGGED_IN = "isLoggedIn";
+    private static final String PREFERENCE_USERNAME = "username";
 
     private SharedPreferences preferences;
 
@@ -27,4 +24,15 @@ public class Preferences {
         editor.putBoolean(PREFERENCE_IS_LOGGED_IN, enabled);
         editor.commit();
     }
+
+    public String getUsername() {
+        return preferences.getString(PREFERENCE_USERNAME, null);
+    }
+
+    public void setUsername(String username){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(PREFERENCE_USERNAME, username);
+        editor.commit();
+    }
+
 }
