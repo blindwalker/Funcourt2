@@ -1,3 +1,4 @@
+/*
 package at.kropf.funcourt.adapter;
 
 import android.app.Activity;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.kropf.funcourt.R;
+import at.kropf.funcourt.db.model.League;
 import at.kropf.funcourt.model.League;
 
 public class LeagueSpinnerAdapter extends BaseAdapter {
@@ -76,4 +78,4 @@ public class LeagueSpinnerAdapter extends BaseAdapter {
     private String getTitle(int position) {
         return position >= 0 && position < leagueList.size() ? leagueList.get(position).getName() : "";
     }
-}
+}*/

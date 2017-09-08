@@ -1,3 +1,4 @@
+/*
 package at.kropf.funcourt.adapter;
 
 import android.content.Context;
@@ -10,14 +11,16 @@ import android.widget.TextView;
 import java.util.List;
 
 import at.kropf.funcourt.R;
-import at.kropf.funcourt.model.Position;
+import at.kropf.funcourt.db.model.PlayerPosition;
 
+*/
 /**
  * Created by martinkropf on 30.12.15.
- */
-public class PositionAdapter extends ArrayAdapter<Position> {
+ *//*
 
-    public PositionAdapter(List<Position> positions, Context context) {
+public class PositionAdapter extends ArrayAdapter<PlayerPosition> {
+
+    public PositionAdapter(List<PlayerPosition> positions, Context context) {
         super(context, R.layout.position_list_item, R.id.artist_name_textview, positions);
     }
 
@@ -34,7 +37,7 @@ public class PositionAdapter extends ArrayAdapter<Position> {
         }
 
         ViewHolder holder = (ViewHolder) v.getTag();
-        String albums = getItem(position).getName();
+        String albums = getItem(position).getPositionName();
 
         switch (position) {
             case 0:
@@ -65,3 +68,4 @@ public class PositionAdapter extends ArrayAdapter<Position> {
     }
 }
 
+*/

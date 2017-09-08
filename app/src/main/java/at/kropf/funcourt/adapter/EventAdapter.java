@@ -1,3 +1,4 @@
+/*
 package at.kropf.funcourt.adapter;
 
 import android.app.Activity;
@@ -7,20 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Calendar;
-import java.util.List;
-
 import at.kropf.funcourt.R;
-import at.kropf.funcourt.model.Event;
+import at.kropf.funcourt.db.model.Event;
+import at.kropf.funcourt.db.model.League;
 import at.kropf.funcourt.model.League;
-import at.kropf.funcourt.model.Position;
 
-/**
- * Created by martinkropf on 30.12.15.
- */
 public class EventAdapter extends ArrayAdapter<Event> {
 
     private Context mContext;
@@ -67,7 +61,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
         switch (position) {
             case 0:
                 holder.eventImage.setVisibility(View.VISIBLE);
-                holder.eventImage.setImageBitmap(currentEvent.getLocation().getImage());
+                holder.eventImage.setImageBitmap(currentEvent.getEventLocation().getImage());
                 holder.date.setTextColor(getContext().getResources().getColor(R.color.colorAccent));
                 holder.month.setTextColor(getContext().getResources().getColor(R.color.colorAccent));
                 holder.weekday.setTextColor(getContext().getResources().getColor(R.color.colorAccent));
@@ -115,3 +109,4 @@ public class EventAdapter extends ArrayAdapter<Event> {
     }
 }
 
+*/

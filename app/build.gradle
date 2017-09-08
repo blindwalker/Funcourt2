@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.1'
 
     defaultConfig {
-        applicationId "at.kropf.funcourt"
+        applicationId "at.kropf.funcourtapp"
         minSdkVersion 16
-        targetSdkVersion 25
-        versionCode 3
-        versionName "0.0.2"
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
     }
     buildTypes {
         release {
@@ -20,15 +20,46 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.google.android.gms:play-services-appindexing:9.8.0'
-    compile 'de.hdodenhof:circleimageview:2.0.0'
+    implementation "com.android.support:appcompat-v7:$rootProject.supportVersion"
+    implementation "com.android.support:design:$rootProject.supportVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
+
+    implementation 'com.android.support:support-v4:26.0.2'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
+    compile 'com.github.nirhart:parallaxscroll:1.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    //arch
+    compile "android.arch.lifecycle:runtime:$rootProject.archVersion"
+    compile "android.arch.lifecycle:extensions:$rootProject.archVersion"
+    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archVersion"
+    compile "android.arch.persistence.room:runtime:$rootProject.archVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.archVersion"
+    compile "android.arch.persistence.room:rxjava2:$rootProject.archVersion"
+
+    //dagger
+    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    provided 'javax.annotation:jsr250-api:1.0'
+
+    // Retrofit & OkHttp
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
+
+    // ButterKnife
+    implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+
+    compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'asia.ivity.android:drag-sort-listview:1.0'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
-    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
 
 }

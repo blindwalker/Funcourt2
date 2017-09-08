@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/mainScroll"
     android:background="@color/colorPrimaryDark"
-    tools:context=".activities.ProfileActivity">
+    tools:context=".ui.activities.ProfileActivity">
 
     <RelativeLayout
         android:layout_width="wrap_content"

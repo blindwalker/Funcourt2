@@ -1,4 +1,5 @@
-package at.kropf.funcourt.activities;
+/*
+package at.kropf.funcourt.ui.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,19 +15,21 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.facebook.AccessToken;
 import com.mobeta.android.dslv.DragSortListView;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
+
+import javax.inject.Inject;
 
 import at.kropf.funcourt.R;
 import at.kropf.funcourt.adapter.PositionAdapter;
-import at.kropf.funcourt.application.App;
-import at.kropf.funcourt.model.Position;
-import at.kropf.funcourt.model.User;
+import at.kropf.funcourt.application.FuncourtApplication;
+import at.kropf.funcourt.application.Preferences;
+
+
+//TODO: migrate this with EditProfileActivity - use same viewmodel at least
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -47,6 +50,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private User.Experience mExperience;
     private User.StrongFoot mStrongFoot;
+
+    @Inject
+    Preferences preferences;
 
     private DragSortListView.DropListener onDrop =
             new DragSortListView.DropListener() {
@@ -101,14 +107,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         findViewById(R.id.btnConfirm).setOnClickListener(this);
 
-        if (AccessToken.getCurrentAccessToken() != null) {
-            profileImage.setImageBitmap(App.getCurrentUser().getProfileImage());
-            profileImage.setVisibility(View.VISIBLE);
-            profileImageHolder.setVisibility(View.GONE);
-
-        }
-
-        ((TextView) findViewById(R.id.txtUsername)).setText(App.getCurrentUser().getUsername());
+        ((TextView) findViewById(R.id.txtUsername)).setText(FuncourtApplication.getCurrentUser().getUsername());
 
     }
 
@@ -154,14 +153,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.profileImage:
             case R.id.profileImageHolder:
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
+                photoPickerIntent.setType("image*/
+/*");
                 startActivityForResult(photoPickerIntent, SELECT_PHOTO);
                 break;
             case R.id.btnConfirm:
-                App.getCurrentUser().setExperience(mExperience);
-                App.getCurrentUser().setStrongFoot(mStrongFoot);
+                FuncourtApplication.getCurrentUser().setExperience(mExperience);
+                FuncourtApplication.getCurrentUser().setStrongFoot(mStrongFoot);
 
-                App.getPreferences().setLoggedIn(true);
+                preferences.setLoggedIn(true);
                 startActivity(new Intent(ProfileActivity.this, MainActivity.class));
                 finish();
         }
@@ -201,7 +201,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         matrix.postScale(1f, 1f);
                         Bitmap resizedBitmap = Bitmap.createBitmap(selectedImage, 0, 0, targetWidth, targetHeight, matrix, true);
 
-                        App.getCurrentUser().setProfileImage(resizedBitmap);
+                        FuncourtApplication.getCurrentUser().setProfileImage(resizedBitmap);
                         profileImage.setImageBitmap(resizedBitmap);
                         profileImage.setVisibility(View.VISIBLE);
                         profileImageHolder.setVisibility(View.GONE);
@@ -214,3 +214,4 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 }
 
+*/

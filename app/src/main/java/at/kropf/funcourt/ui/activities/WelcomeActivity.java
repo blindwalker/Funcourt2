@@ -1,4 +1,4 @@
-package at.kropf.funcourt.activities;
+package at.kropf.funcourt.ui.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +17,7 @@ public class WelcomeActivity extends AppCompatActivity {
         findViewById(R.id.btnRegister).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(WelcomeActivity.this, RegisterActivity.class));
+                //startActivity(new Intent(WelcomeActivity.this, RegistrationActivity.class));
             }
         });
     }

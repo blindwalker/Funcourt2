@@ -1,4 +1,5 @@
-package at.kropf.funcourt.activities;
+/*
+package at.kropf.funcourt.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,15 +16,14 @@ import com.mobeta.android.dslv.DragSortListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import at.kropf.funcourt.R;
 import at.kropf.funcourt.adapter.PositionAdapter;
-import at.kropf.funcourt.application.App;
-import at.kropf.funcourt.model.Position;
-import at.kropf.funcourt.model.User;
-
-/**
- * Created by Daniel on 27.08.17.
- */
+import at.kropf.funcourt.application.Preferences;
+import at.kropf.funcourt.application.SharedConstants;
+import at.kropf.funcourt.db.model.PlayerPosition;
+import at.kropf.funcourt.db.model.User;
 
 public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -46,14 +46,17 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     private TextView txtUsername;
 
-    private User.Experience mExperience;
-    private User.StrongFoot mStrongFoot;
+    private int mExperience;
+    private int mStrongFoot;
+
+    @Inject
+    Preferences preferences;
 
     private DragSortListView.DropListener onDrop =
             new DragSortListView.DropListener() {
                 @Override
                 public void drop(int from, int to) {
-                    Position position = positionAdapter.getItem(from);
+                    PlayerPosition position = positionAdapter.getItem(from);
 
                     positionAdapter.remove(position);
                     positionAdapter.insert(position, to);
@@ -65,7 +68,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        currentUser = App.getCurrentUser();
+        //TODO: get user from DB
+        //currentUser = FuncourtApplication.getCurrentUser();
 
         ((ScrollView) findViewById(R.id.mainScroll)).scrollTo(0, 0);
 
@@ -94,11 +98,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
         DragSortListView lv = (DragSortListView) findViewById(R.id.dragSortListView);
         lv.setDropListener(onDrop);
-        List<Position> mPositions = new ArrayList<>();
-        mPositions.add(new Position(0, "S", "Sturm"));
-        mPositions.add(new Position(0, "M", "Mittelfeld"));
-        mPositions.add(new Position(0, "V", "Verteidigung"));
-        mPositions.add(new Position(0, "T", "Tor"));
+
+        //TODO: get player positions from DB
 
         positionAdapter = new PositionAdapter(mPositions, this);
 
@@ -116,36 +117,36 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         switch (v.getId()) {
             case R.id.btnFootLeft:
                 resetFootButtons();
-                mStrongFoot = User.StrongFoot.LEFT;
+                mStrongFoot = SharedConstants.STRONG_FOOT_LEFT;
                 btnFootLeft.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 btnFootLeft.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 break;
             case R.id.btnFootRight:
                 resetFootButtons();
-                mStrongFoot = User.StrongFoot.RIGHT;
+                mStrongFoot = SharedConstants.STRONG_FOOT_RIGHT;
                 btnFootRight.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 btnFootRight.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 break;
             case R.id.btnFootBoth:
                 resetFootButtons();
-                mStrongFoot = User.StrongFoot.BOTH;
+                mStrongFoot = SharedConstants.STRONG_FOOT_BOTH;
                 btnFootBoth.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 btnFootBoth.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 break;
             case R.id.llAmateur:
-                mExperience = User.Experience.AMATEUR;
+                mExperience = SharedConstants.EXPERIENCE_AMATEUR;
                 ((ImageView) llAmateur.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_on);
                 ((ImageView) llTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
                 ((ImageView) llFormerTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
                 break;
             case R.id.llTeam:
-                mExperience = User.Experience.TEAM;
+                mExperience = SharedConstants.EXPERIENCE_TEAM;
                 ((ImageView) llAmateur.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
                 ((ImageView) llTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_on);
                 ((ImageView) llFormerTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
                 break;
             case R.id.llFormerTeam:
-                mExperience = User.Experience.FORMER_TEAM;
+                mExperience = SharedConstants.EXPERIENCE_FORMER_TEAM;
                 ((ImageView) llAmateur.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
                 ((ImageView) llTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
                 ((ImageView) llFormerTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_on);
@@ -153,14 +154,19 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             case R.id.profileImage:
             case R.id.profileImageHolder:
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
+                photoPickerIntent.setType("image*/
+/*");
                 startActivityForResult(photoPickerIntent, SELECT_PHOTO);
                 break;
             case R.id.btnConfirm:
-                App.getCurrentUser().setExperience(mExperience);
-                App.getCurrentUser().setStrongFoot(mStrongFoot);
+                //TODO: Write to DB
+                */
+/*
+                FuncourtApplication.getCurrentUser().setExperience(mExperience);
+                FuncourtApplication.getCurrentUser().setStrongFoot(mStrongFoot);
+                *//*
 
-                App.getPreferences().setLoggedIn(true);
+                preferences.setLoggedIn(true);
                 startActivity(new Intent(EditProfileActivity.this, MainActivity.class));
                 finish();
         }
@@ -182,23 +188,25 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         txtUsername.setText(currentUser.getUsername());
     }
 
-    /**
+    */
+/**
      *
      * display experience from stored user.
-     */
+     *//*
+
     private void showExperience() {
-        switch (currentUser.getExperience()) {
-            case AMATEUR:
+        switch (currentUser.getPlayerExperience()) {
+            case SharedConstants.EXPERIENCE_AMATEUR:
                 ((ImageView) llAmateur.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_on);
                 ((ImageView) llTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
                 ((ImageView) llFormerTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
                 break;
-            case TEAM:
+            case SharedConstants.EXPERIENCE_TEAM:
                 ((ImageView) llAmateur.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
                 ((ImageView) llTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_on);
                 ((ImageView) llFormerTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
                 break;
-            case FORMER_TEAM:
+            case SharedConstants.EXPERIENCE_FORMER_TEAM:
                 ((ImageView) llAmateur.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
                 ((ImageView) llTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_off);
                 ((ImageView) llFormerTeam.findViewWithTag("radio")).setImageResource(R.drawable.ic_radio_on);
@@ -209,18 +217,19 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private void showStrongFoot() {
         resetFootButtons();
         switch (currentUser.getStrongFoot()){
-            case RIGHT:
+            case SharedConstants.STRONG_FOOT_RIGHT:
                 btnFootRight.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 btnFootRight.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 break;
-            case LEFT:
+            case SharedConstants.STRONG_FOOT_LEFT:
                 btnFootLeft.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 btnFootLeft.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 break;
-            case BOTH:
+            case SharedConstants.STRONG_FOOT_BOTH:
                 btnFootBoth.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 btnFootBoth.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 break;
         }
     }
 }
+*/
