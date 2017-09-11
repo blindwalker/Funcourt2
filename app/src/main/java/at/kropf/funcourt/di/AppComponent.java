@@ -29,6 +29,7 @@ import dagger.android.AndroidInjectionModule;
 @Component(modules = {
         AndroidInjectionModule.class,
         AppModule.class,
+        RepositoryModule.class,
         MainActivityModule.class
 })
 public interface AppComponent {

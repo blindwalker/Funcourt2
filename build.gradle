@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-beta4'
+        classpath 'com.android.tools.build:gradle:3.0.0-beta5'
     }
 }
 
@@ -32,7 +32,7 @@ project.ext {
     archVersion = '1.0.0-alpha9'
     retrofitVersion = '2.3.0'
     okhttpVersion = '3.8.0'
-    daggerVersion = '2.11-rc2'
+    daggerVersion = '2.11'
     butterKnifeVersion = '8.8.1'
     junitVersion = '4.12'
 }

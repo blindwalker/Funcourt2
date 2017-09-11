@@ -16,6 +16,8 @@
 
 package at.kropf.funcourt.di;
 
+import at.kropf.funcourt.ui.WelcomeFragment;
+import at.kropf.funcourt.ui.login.LoginFragment;
 import at.kropf.funcourt.ui.registration.RegistrationFragment;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -24,4 +26,10 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract RegistrationFragment contributeRegistrationFragment();
+
+    @ContributesAndroidInjector
+    abstract WelcomeFragment contributeWelcomeFragment();
+
+    @ContributesAndroidInjector
+    abstract LoginFragment contributeLoginFragment();
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@drawable/bg_welcome"
+tools:context=".ui.activities.WelcomeActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_welcome"
+        android:layout_marginTop="46dp"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="@string/login"
+            android:background="@color/colorPrimaryDark"
+            style="@style/defaultFont"
+            android:layout_weight="0.5"/>
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:background="@color/colorAccent"
+            style="@style/defaultFont"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="@string/register"
+            android:layout_weight="0.5"/>
+    </LinearLayout>
+
+</RelativeLayout>
