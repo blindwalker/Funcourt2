@@ -3,7 +3,6 @@ package at.kropf.funcourt.ui;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import javax.inject.Inject;
@@ -18,7 +17,7 @@ import at.kropf.funcourt.ui.login.LoginFragment;
 public class NavigationController {
 
     private final int containerId;
-    private final FragmentManager fragmentManager;
+    private final android.support.v4.app.FragmentManager fragmentManager;
     private static final String BACK_STACK = "main";
 
     @Inject
@@ -36,7 +35,7 @@ public class NavigationController {
 
         WelcomeFragment welcomeFragment = WelcomeFragment.newInstance();
 
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
         addAnimation(transaction, directionBackwards)
                 .replace(containerId, welcomeFragment);
 

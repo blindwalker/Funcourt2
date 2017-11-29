@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-beta5'
+        classpath 'com.android.tools.build:gradle:3.0.1'
     }
 }
 
@@ -26,13 +26,13 @@ task clean(type: Delete) {
 project.ext {
     versionName = "0.0.1-SNAPSHOT"
 
-    supportVersion = '26.0.2'
+    supportVersion = '26.1.0'
     playServicesVersion = '10.2.1'
-    constraintLayoutVersion = '1.1.0-beta1'
-    archVersion = '1.0.0-alpha9'
+    constraintLayoutVersion = '1.1.0-beta3'
+    archVersion = '1.0.0'
     retrofitVersion = '2.3.0'
     okhttpVersion = '3.8.0'
-    daggerVersion = '2.11'
+    daggerVersion = '2.13'
     butterKnifeVersion = '8.8.1'
     junitVersion = '4.12'
 }

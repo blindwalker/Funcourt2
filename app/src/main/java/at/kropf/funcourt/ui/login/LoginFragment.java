@@ -3,26 +3,31 @@ package at.kropf.funcourt.ui.login;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import at.kropf.funcourt.R;
+import at.kropf.funcourt.common.viewmodel.Response;
 import at.kropf.funcourt.di.Injectable;
 import butterknife.ButterKnife;
 
-public class LoginFragment extends LifecycleFragment implements Injectable {
+import static at.kropf.funcourt.common.viewmodel.Status.ERROR;
+import static at.kropf.funcourt.common.viewmodel.Status.SUCCESS;
+
+public class LoginFragment extends Fragment implements Injectable {
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -161,5 +166,25 @@ public class LoginFragment extends LifecycleFragment implements Injectable {
             }
         });
 
+    }
+
+
+    private void observeLoadingStatus() {
+        loginViewModel.getLoginStatus().observe(this, this::processLoginResponse);
+    }
+
+
+    private void processLoginResponse(Response<String> response) {
+        switch (response.status) {
+            case SUCCESS:
+                Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+                break;
+
+            case ERROR:
+                //TODO: add timber
+                //Timber.e(response.error);
+                Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

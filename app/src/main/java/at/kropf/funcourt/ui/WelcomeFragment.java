@@ -1,7 +1,5 @@
 package at.kropf.funcourt.ui;
 
-
-import android.arch.lifecycle.LifecycleFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,14 +12,10 @@ import at.kropf.funcourt.di.Injectable;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class WelcomeFragment extends LifecycleFragment implements Injectable{
+public class WelcomeFragment extends android.support.v4.app.Fragment implements Injectable{
 
     @Inject
     NavigationController navigationController;
-
-    public WelcomeFragment() {
-        // Required empty public constructor
-    }
 
     public static WelcomeFragment newInstance() {
         return new WelcomeFragment();
